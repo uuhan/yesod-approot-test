@@ -36,3 +36,6 @@ instance Yesod App where
 #ifdef site2
     approot = ApprootStatic "/site2"
 #endif
+
+========================================================================
+解决了， 是自己犯了一个很傻的错误，[https://github.com/yesodweb/yesod/issues/1210]
