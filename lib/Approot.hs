@@ -1,3 +1,4 @@
+{-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE OverloadedStrings #-}
@@ -9,14 +10,26 @@ module Approot
 
 import           Yesod
 import           Yesod.EmbeddedStatic
+#ifndef USE_STATIC
+import           Data.Text (Text, pack)
+import           System.Environment
+#endif
 
 mkEmbeddedStatic False "eGen" [embedDir "public"]
 
 getSite :: IO Application
-getSite = toWaiAppPlain $ App eGen
+getSite = do 
+#ifndef USE_STATIC
+    root <- pack <$> getEnv "SiteRoot"
+#endif
+    let getStatic = eGen
+    toWaiAppPlain $ App{..}
 
 data App = App
     { getStatic :: EmbeddedStatic
+#ifndef USE_STATIC
+    , root      :: Text
+#endif
     } 
 
 mkYesod "App" [parseRoutes|
@@ -36,6 +49,6 @@ instance Yesod App where
 #ifdef USE_STATIC
     approot = ApprootStatic "/myroot"
 #else
-    approot = guessApproot
+    approot = ApprootMaster root
 #endif
     makeSessionBackend _ = return Nothing

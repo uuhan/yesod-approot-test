@@ -30,6 +30,7 @@ library
                      , yesod == 1.4.2.1
                      , yesod-static
                      , wai
+                     , text
     if flag(static)
         cpp-options:   -DUSE_STATIC
 
