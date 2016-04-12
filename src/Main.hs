@@ -10,7 +10,6 @@ import           Control.Concurrent
 import           Control.Monad (unless, void)
 import           System.Process as P
 import           System.Directory
-import           System.FilePath ((</>))
 import           System.Posix
 import           System.Exit
 
