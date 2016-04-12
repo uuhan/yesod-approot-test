@@ -1,0 +1,38 @@
+This cabal package is to test the guessApproot after yesod-core-1.4.16
+
+The default Approot:
+instance Yesod App where
+    approot = guessApproot
+
+You may run this package like this:
+    cabal clean
+    cabal configure 
+    cabal run
+
+Then, visit [http://127.0.0.1:3000/myroot/]
+
+You will see that. The translated URLs (like HomeR, StaticR js_site_js) are wrong, so you can not visit the web app by other mechines.
+
+But it works fine if we change the approot to:
+instance Yesod App where
+    approot = ApprootStatic "/myroot"
+
+You can run again like this:
+    cabal clean
+    cabal configure -fstatic
+    cabal run
+
+=========================================================================
+I want my web app working like this:
+    cabal run -- --root="/myroot"
+namely, I can change the ApprootStatic value at run time not compile time 
+
+Compiling time method:
+
+instance Yesod App where
+#ifdef site1
+    approot = ApprootStatic "/site1"
+#endif
+#ifdef site2
+    approot = ApprootStatic "/site2"
+#endif
