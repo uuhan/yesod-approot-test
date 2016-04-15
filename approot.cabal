@@ -2,7 +2,7 @@
 -- documentation, see http://haskell.org/cabal/users-guide/
 
 name:                approot
-version:             0.1.0.0
+version:             0.1.0
 license-file:        LICENSE
 author:              uuhan
 maintainer:          https://github.com/uuhan
